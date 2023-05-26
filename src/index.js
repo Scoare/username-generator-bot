@@ -80,8 +80,13 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.commandName == 'generate') {
         const amount = interaction.options.get('amount').value;
 
-        if (amount < 1 || amount > 100) {
-            interaction.reply('Specified amount must be higher than 0 and less than 101!');
+        if (amount < 1 || amount > 50) {
+            const errorEmbed = new EmbedBuilder()
+            .setTitle("Error!")
+            .setDescription('Specified amount must be higher than 0 and less than or equal to 50!')
+            .setColor('Red');
+
+            interaction.reply({ embeds: [errorEmbed] });
         } else if (amount <= 100) {
             try {
                 const usernamePromises = [];
@@ -117,7 +122,12 @@ client.on('interactionCreate', async (interaction) => {
             interaction.user.send({ embeds: [embed] });
             interaction.reply('Check your DMs!');
             } catch (error) {
-                interaction.reply(error);
+                const errorEmbed = new EmbedBuilder()
+                    .setTitle("Error!")
+                    .setDescription(error)
+                    .setColor('Red');
+
+                interaction.reply({ embeds: [errorEmbed] });
             }
         }
     }
