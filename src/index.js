@@ -1,6 +1,11 @@
 require('dotenv').config();
 const { Client, IntentsBitField, EmbedBuilder, inlineCode } = require('discord.js');
 
+const axios = require('axios');
+
+const rawGitHubLinkNoun = 'https://raw.githubusercontent.com/wen1now/wordlists/master/most_common_nouns.txt';
+const rawGitHubLinkAdj = 'https://gist.githubusercontent.com/hugsy/8910dc78d208e40de42deb29e62df913/raw/eec99c5597a73f6a9240cab26965a8609fa0f6ea/english-adjectives.txt';
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -11,13 +16,8 @@ const client = new Client({
 });
 
 async function GenerateNoun() {
-    const axios = require('axios');
-
     return new Promise((resolve, reject) => {
-        // Example raw GitHub link containing nouns on each line
-        const rawGitHubLink = 'https://raw.githubusercontent.com/wen1now/wordlists/master/most_common_nouns.txt';
-    
-        axios.get(rawGitHubLink)
+        axios.get(rawGitHubLinkNoun)
           .then(response => {
             const data = response.data;
     
@@ -43,13 +43,8 @@ async function GenerateNoun() {
 }
 
 async function GenerateAdj() {
-    const axios = require('axios');
-
     return new Promise((resolve, reject) => {
-        // Example raw GitHub link containing nouns on each line
-        const rawGitHubLink = 'https://gist.githubusercontent.com/hugsy/8910dc78d208e40de42deb29e62df913/raw/eec99c5597a73f6a9240cab26965a8609fa0f6ea/english-adjectives.txt';
-    
-        axios.get(rawGitHubLink)
+        axios.get(rawGitHubLinkAdj)
           .then(response => {
             const data = response.data;
     
@@ -80,14 +75,14 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.commandName == 'generate') {
         const amount = interaction.options.get('amount').value;
 
-        if (amount < 1 || amount > 50) {
+        if (amount < 1 || amount > 99) {
             const errorEmbed = new EmbedBuilder()
             .setTitle("Error!")
-            .setDescription('Specified amount must be higher than 0 and less than or equal to 50!')
+            .setDescription('Specified amount must be higher than 0 and less than 100!')
             .setColor('Red');
 
             interaction.reply({ embeds: [errorEmbed] });
-        } else if (amount <= 100) {
+        } else if (amount <= 99) {
             try {
                 const usernamePromises = [];
 
