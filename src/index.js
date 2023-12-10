@@ -1,5 +1,7 @@
-require('dotenv').config();
+//require('dotenv').config();
 const { Client, IntentsBitField, EmbedBuilder, inlineCode } = require('discord.js');
+
+const token = "MTExMTY1NTYxOTgxMjkzMzY2Mw.GGkW4-.v_wlUu_uAZLsWiC8K0v4R0JV5S9R4PU7OpqnYU";
 
 const axios = require('axios');
 
@@ -132,4 +134,4 @@ function capitalizeFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-client.login(process.env.TOKEN);
+client.login(token);
